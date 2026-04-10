@@ -55,20 +55,6 @@ Las restricciones aseguran que los datos sean correctos y sigan las reglas del n
 
 
 ## 4. Ejemplo Práctico: Implementando la base de datos de CodeMaker
-Vamos a crear tres tablas relacionadas. Fíjate en cómo conectamos `Alumnos` con `Cursos` y `Proyectos` con `Alumnos`.
-
-**A. Tabla de Cursos (La base)**
-```SQL
-CREATE TABLE Cursos (
-    id_curso INTEGER PRIMARY KEY AUTOINCREMENT,
-    tecnologia TEXT NOT NULL,
-    nivel TEXT CHECK (nivel IN ('Junior', 'Senior', 'Master', 'PRO'))
-);
-```
-`Tip: fíjate en CHECK, comprueba que el valor sea uno de los especificados, no vale cualquier cosa.`
-
-**B. Tabla de Alumnos (Relacionada con Cursos)**
-Aquí añadimos una Foreign Key. Decimos que `id_curso` en esta tabla debe existir previamente en la tabla `Cursos`.
 
 ```SQL
 CREATE TABLE Alumnos (
@@ -76,7 +62,5 @@ CREATE TABLE Alumnos (
     nombre TEXT NOT NULL,
     email TEXT UNIQUE,
     id_curso INTEGER,
-    -- Definimos la relación
-    FOREIGN KEY (id_curso) REFERENCES Cursos(id_curso)
 );
 ```
