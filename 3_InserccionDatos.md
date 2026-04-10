@@ -24,12 +24,16 @@ Debido a la Integridad Referencial (las Foreign Keys), no podemos saltarnos el o
 
 Ejemplo Práctico:
 ```SQL
--- Paso 1: Creamos el curso
-INSERT INTO Cursos (id_curso, tecnologia, nivel) VALUES (10, 'Blender 3D', 'Master');
+-- Paso 0: ¡Activar las relaciones!
+PRAGMA foreign_keys = ON;
 
--- Paso 2: Registramos al alumno en ese curso (id 10)
-INSERT INTO Alumnos (id_alumno, nombre, email, id_curso) 
-VALUES (1, 'Sara Code', 'sara@codemaker.es', 10);
+-- Paso 1: Creamos el curso
+INSERT INTO Cursos (tecnologia, nivel) VALUES ('Blender 3D', 'Master');
+
+-- Paso 2: Registramos al alumno
+-- Nota: Si usamos AUTOINCREMENT, no hace falta poner el ID, SQLite lo pone solo.
+INSERT INTO Alumnos (nombre, email, id_curso) 
+VALUES ('Sara Code', 'sara@codemaker.es', 1);
 ```
 
 </br>
