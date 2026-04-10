@@ -33,11 +33,10 @@ Al igual que en Java o Python, en SQL debemos decirle a la base de datos qué ti
 
 | Tipo SQL      | Descripción                                             | Equivalente en Java/C# |
 | :---          | :---                                                    | :---                   |
-| INT	          | Números enteros (IDs, edades)                           | int                    |
-| VARCHAR(n)    | Texto de longitud variable (n = máximo de caracteres)   | String                 |
-| FLOAT         | Decimales de precisión simple. Rápido pero con posibles errores de redondeo.                                   | float                  |
-| DATE          | Fechas (YYYY-MM-DD)                                     | LocalDate              |
-| BOOLEAN	      | Verdadero o Falso (1 o 0)                               |	boolean                |
+| INTEGER	          | Números enteros (IDs, edades)                           | int                    |
+| TEXT    | Texto de longitud variable (n = máximo de caracteres)   | String                 |
+| REAL         | Decimales de precisión simple. Rápido pero con posibles errores de redondeo.                                   | float                  |
+
 
 </br>
 
@@ -49,6 +48,7 @@ Las restricciones aseguran que los datos sean correctos y sigan las reglas del n
 - `NOT NULL`: Obliga a que el campo siempre tenga un valor (ej. el nombre de un alumno).
 - `UNIQUE`: Asegura que todos los valores en una columna sean diferentes (ej. el email).
 - `AUTO_INCREMENT`: Genera el ID automáticamente (+1) cada vez que añadimos un registro.
+- `CHECK`: Valida condiciones
 - `FOREIGN KEY (FK)`: La "llave foránea" que conecta una tabla con otra.
 
 </br>
@@ -60,22 +60,22 @@ Vamos a crear tres tablas relacionadas. Fíjate en cómo conectamos `Alumnos` co
 **A. Tabla de Cursos (La base)**
 ```SQL
 CREATE TABLE Cursos (
-    id_curso INT PRIMARY KEY AUTO_INCREMENT,
-    tecnologia VARCHAR(50) NOT NULL,
-    nivel VARCHAR(20) CHECK (nivel IN ('Junior', 'Senior', 'Master', 'PRO'))
+    id_curso INTEGER PRIMARY KEY AUTOINCREMENT,
+    tecnologia TEXT NOT NULL,
+    nivel TEXT CHECK (nivel IN ('Junior', 'Senior', 'Master', 'PRO'))
 );
 ```
-`Tip: fíjate en `CHECK`, comprueba que el valor sea uno de los especificados, no vale cualquier cosa.`
+`Tip: fíjate en CHECK, comprueba que el valor sea uno de los especificados, no vale cualquier cosa.`
 
 **B. Tabla de Alumnos (Relacionada con Cursos)**
 Aquí añadimos una Foreign Key. Decimos que `id_curso` en esta tabla debe existir previamente en la tabla `Cursos`.
 
 ```SQL
 CREATE TABLE Alumnos (
-    id_alumno INT PRIMARY KEY AUTO_INCREMENT,
-    nombre VARCHAR(100) NOT NULL,
-    email VARCHAR(100) UNIQUE,
-    id_curso INT,
+    id_alumno INTEGER PRIMARY KEY AUTOINCREMENT,
+    nombre TEXT NOT NULL,
+    email TEXT UNIQUE,
+    id_curso INTEGER,
     -- Definimos la relación
     FOREIGN KEY (id_curso) REFERENCES Cursos(id_curso)
 );
