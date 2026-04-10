@@ -1,20 +1,20 @@
-# 03. Inserción de Datos (DML)
+# 03. Inserción y edición de datos.
 
-Una vez creada la estructura, toca alimentar la base de datos. Para ello usamos el comando `INSERT INTO` de SQL.
+Una vez creada la estructura, toca empezar a añadir y modificar datos a las tablas.
 
 </br>
 
-## 1. Añadir elementos
+## 1. Añadir registros.
 Se deben especificar las columnas donde se van a introducir los datos, y a continuación los datos:
 
 ```sql
-INSERT INTO Cursos (tecnologia, nivel) 
-VALUES ('Unity 3D', 'Master');
+INSERT INTO Alumnos (nombre, nivel) 
+VALUES ('Juan', 'Master');
 ```
 
 </br>
 
-## 2. Borrar elementos
+## 2. Borrar registros.
 
 Se usa para eliminar filas (registros) de la tabla.
 
@@ -34,7 +34,7 @@ WHERE nombre = 'Juan';
 
 > **BORRADO TOTAL:** Si ejecutas DELETE FROM alumnos; (sin el WHERE), vaciarás la tabla por completo. La estructura de la tabla (las columnas) seguirá existiendo, pero estará vacía.
 
-## 3. ACTUALIZAR DATOS
+## 3. Actualizar registros.
 
 Se usa cuando un dato ya existe pero ha cambiado. Por ejemplo, un alumno sube de nivel o cambia su número de teléfono.
 
