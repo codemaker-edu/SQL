@@ -4,7 +4,7 @@ Una vez creada la estructura, toca alimentar la base de datos. Para ello usamos 
 
 </br>
 
-## 1. Sintaxis Básica
+## 1. Añadir elementos
 Se deben especificar las columnas donde se van a introducir los datos, y a continuación los datos:
 
 ```sql
@@ -14,38 +14,44 @@ VALUES ('Unity 3D', 'Master');
 
 </br>
 
-## 2. El Orden de los Factores SÍ Altera el Producto
-Debido a la Integridad Referencial (las Foreign Keys), no podemos saltarnos el orden lógico.
-- Primero: Insertamos en tablas "independientes" (como Cursos).
-- Segundo: Insertamos en tablas que dependen de otras (como Alumnos, que necesita un id_curso).
+## 2. Borrar elementos
 
-> [!IMPORTANT]
-> Piénsalo, si para introducir un alumno necesitamos especificar un curso, no podremos introducir alumnos hasta que no hayamos introducido los cursos
+Se usa para eliminar filas (registros) de la tabla.
 
-Ejemplo Práctico:
+La Sintaxis:
 ```SQL
--- Paso 0: ¡Activar las relaciones!
-PRAGMA foreign_keys = ON;
-
--- Paso 1: Creamos el curso
-INSERT INTO Cursos (tecnologia, nivel) VALUES ('Blender 3D', 'Master');
-
--- Paso 2: Registramos al alumno
--- Nota: Si usamos AUTOINCREMENT, no hace falta poner el ID, SQLite lo pone solo.
-INSERT INTO Alumnos (nombre, email, id_curso) 
-VALUES ('Sara Code', 'sara@codemaker.es', 1);
+DELETE FROM nombre_tabla 
+WHERE condicion;
 ```
 
-</br>
+Ejemplo en CodeMaker:
+"Juan ha decidido dejar el curso y queremos borrar sus datos".
 
-## 3. Errores Comunes (Para debugear)
-Los errores más comunes que podemos encontrarnos al introducir datos son los siguientes:
+```SQL
+DELETE FROM alumnos 
+WHERE nombre = 'Juan';
+```
 
-> [!CAUTION]
-> **Error de Clave Foránea**: Intentar añadir un alumno al curso id 99 cuando ese curso no existe. SQL lanzará un error y no guardará nada.
+> **BORRADO TOTAL:** Si ejecutas DELETE FROM alumnos; (sin el WHERE), vaciarás la tabla por completo. La estructura de la tabla (las columnas) seguirá existiendo, pero estará vacía.
 
-> [!CAUTION]
-> **Error de Clave Primaria**: Intentar insertar dos alumnos con el mismo id_alumno.
+## 3. ACTUALIZAR DATOS
 
-> [!CAUTION]
-> **Error de Tipo**: Intentar meter un texto largo en un VARCHAR(5) o un número con 4 decimales en un DECIMAL(5,1). 
+Se usa cuando un dato ya existe pero ha cambiado. Por ejemplo, un alumno sube de nivel o cambia su número de teléfono.
+
+La Sintaxis:
+```SQL
+UPDATE nombre_tabla 
+SET columna1 = valor1, columna2 = valor2 
+WHERE condicion;
+```
+
+Ejemplo en CodeMaker:
+"Antonio ha cumplido años y ahora es nivel Senior".
+
+```SQL
+UPDATE alumnos 
+SET edad = 21, nivel = 'Senior' 
+WHERE nombre = 'Antonio';
+```
+
+> **EL PELIGRO DEL WHERE:** Si olvidas poner el WHERE, SQL no te preguntará. Pondrá a todos los alumnos de la academia con 21 años y nivel Senior.
