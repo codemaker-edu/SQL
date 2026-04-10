@@ -1,6 +1,6 @@
 # 03. Inserción de Datos (DML)
 
-Una vez creada la estructura, toca alimentar la base de datos. Para ello usamos el comando `INSERT INTO`.
+Una vez creada la estructura, toca alimentar la base de datos. Para ello usamos el comando `INSERT INTO` de SQL.
 
 </br>
 
@@ -18,7 +18,6 @@ VALUES ('Unity 3D', 'Master');
 Debido a la Integridad Referencial (las Foreign Keys), no podemos saltarnos el orden lógico.
 - Primero: Insertamos en tablas "independientes" (como Cursos).
 - Segundo: Insertamos en tablas que dependen de otras (como Alumnos, que necesita un id_curso).
-- Tercero: Insertamos en las hojas del árbol (como Proyectos, que necesita un id_alumno).
 
 > [!IMPORTANT]
 > Piénsalo, si para introducir un alumno necesitamos especificar un curso, no podremos introducir alumnos hasta que no hayamos introducido los cursos
@@ -31,10 +30,6 @@ INSERT INTO Cursos (id_curso, tecnologia, nivel) VALUES (10, 'Blender 3D', 'Mast
 -- Paso 2: Registramos al alumno en ese curso (id 10)
 INSERT INTO Alumnos (id_alumno, nombre, email, id_curso) 
 VALUES (1, 'Sara Code', 'sara@codemaker.es', 10);
-
--- Paso 3: Sara crea su primer proyecto
-INSERT INTO Proyectos (titulo, software, id_alumno) 
-VALUES ('Escenario Cyberpunk', 'Blender', 1);
 ```
 
 </br>
