@@ -1,6 +1,6 @@
 # 04. Consultas de Datos (SELECT)
 
-El comando `SELECT` es la herramienta que usamos para "preguntar" a la base de datos. Es el corazón del **DML (Data Manipulation Language)**.
+El comando `SELECT` de SQL es la herramienta que usamos para "preguntar" a la base de datos.
 
 > **Regla de Oro:** Cuando consultamos datos de tablas, SQL siempre nos responderá mostrando los resultados en una **nueva tabla** temporal.
 
