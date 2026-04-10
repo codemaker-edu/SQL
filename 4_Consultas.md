@@ -31,3 +31,10 @@ ORDER BY nombre ASC;
 ## 3. Formas de ordenar con ' ORDER BY'
 - **ASC**: ordenar ascendentemente (orden alfabético o numérico).
 - **DESC**: ordenar descendentemente (orden alfabético o numérico).
+
+## 4. Funciones de agregación
+- **COUNT()** para contar: `SELECT COUNT(*) FROM alumnos;`
+- **AVG()** para hacer promedios: `SELECT AVG(edad) FROM alumnos;`
+- **SUM()** para sumar: `SELECT SUM(pago) FROM alumnos;`
+- **MAX()** para buscar el valor máximo: `SELECT MAX(edad) FROM alumnos;`
+- **MIN()** para buscar el valor mínimo: `SELECT MIN(edad) FROM alumnos;`
