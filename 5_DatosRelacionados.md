@@ -5,9 +5,14 @@ En el mundo real, la información no está en una sola tabla gigante. Está repa
 
 Para conectar dos tablas, usamos una Foreign Key (FK). Es una columna en una tabla que hace referencia al ID (Primary Key, PK) de otra tabla.
 
-- Tabla Padre (**`Cursos`**): Tiene clave primaria (PK) `id_curso`.
-- Tabla Hija (**`Alumnos`**): Tiene clave primaria (PK) `id_alumno` y una clave foránea (FK) `id_curso`.
+- Tabla Padre (**`Alumnos`**): Tiene clave primaria (PK) `id_alumno`.
+- Tabla Hija (**`Padres`**): Tiene clave primaria (PK) `id_padre` y una clave foránea (FK) `id_alumno`.
 
+Importante! SQLite tiene desactivadas por defecto las relaciones. En cada sesión (cada vez que abras DBeaver u otro software) debes ejecutar el siguiente comando para activarlas:
+```SQL
+-- Paso 0: Activar las FK en SQLite
+PRAGMA foreign_keys = ON;
+```
 </br>
 
 ## 2. Creación de tablas con relaciones
@@ -15,18 +20,21 @@ Para conectar dos tablas, usamos una Foreign Key (FK). Es una columna en una tab
 Al crear la tabla "hija", debemos avisar a SQL de que una de sus columnas está conectada a otra tabla.
 
 ```SQL
--- Primero creamos la tabla independiente (Cursos)
-CREATE TABLE cursos (
-    id_curso INTEGER PRIMARY KEY AUTOINCREMENT,
-    nombre_curso TEXT NOT NULL
+-- Primero creamos la tabla independiente (Alumnos)
+CREATE TABLE alumnos (
+	id_alumno INTEGER PRIMARY KEY AUTOINCREMENT,
+	nombre TEXT NOT NULL,
+	dni TEXT UNIQUE,
+	-- resto de atributos
 );
 
 -- Luego la tabla dependiente (Alumnos)
-CREATE TABLE alumnos (
-    id_alumno INTEGER PRIMARY KEY AUTOINCREMENT,
-    nombre TEXT NOT NULL,
-    id_curso INTEGER, -- Esta es la columna que conectará
-    FOREIGN KEY (id_curso) REFERENCES cursos(id_curso)
+CREATE TABLE tutor (
+	id_tutor INTEGER PRIMARY KEY AUTOINCREMENT,
+	nombre TEXT NOT NULL,
+	pago TEXT NOT NULL CHECK(pago in('Efectivo', 'Bizum')),
+	id_alumno INTEGER,
+	FOREIGN KEY (id_alumno) REFERENCES alumnos(id_alumno)
 );
 ```
 </br>
@@ -36,14 +44,20 @@ CREATE TABLE alumnos (
 ¡Importante! No puedes inscribir a un alumno en un curso que no existe, por lo que primero debes insertar los datos de los cursos, y después el de los alumnos.
 
 ```SQL
--- Paso 0: Activar las FK en SQLite
-PRAGMA foreign_keys = ON;
 
--- Paso 1: Crear el curso
-INSERT INTO cursos (nombre_curso) VALUES ('Codemaker Master'); -- Supongamos que genera el ID 1
+-- Paso 1: Insertar alumnos
+INSERT INTO alumnos (nombre, edad, telefono, nivel, genero) VALUES 
+('Antonio', 20, '655443322', 'Master', 'masculino'),
+('Maria', 21, '666553344', 'Master', 'femenino'),
+('Juan', 16, '666554433', 'Senior', 'femenino'),
+('Elena', 15, '666557788', 'Junior', 'masculino');
 
--- Paso 2: Crear al alumno vinculado a ese curso
-INSERT INTO alumnos (nombre, id_curso) VALUES ('Juan', 1);
+-- Paso 2: Insertar padres
+INSERT INTO tutor (nombre, pago, id_alumno) VALUES 
+('Paco', 'Bizum', 2),
+('Juana', 'Efectivo', 1),
+('Pepe', 'Bizum', 3),
+('Marta', 'Efectivo', 4);
 ```
 </br>
 
@@ -53,9 +67,8 @@ Cuando queremos ver el nombre del alumno Y el nombre de su curso a la vez, usamo
 
 Estructura del JOIN:
 ```sql
-SELECT alumnos.nombre, cursos.nombre_curso
-FROM alumnos
-INNER JOIN cursos ON alumnos.id_curso = cursos.id_curso;
+SELECT alumnos.nombre, tutor.nombre, tutor.pago
+FROM alumnos INNER JOIN tutor ON tutor.id_alumno = alumnos.id_alumno;
 ```
 
 ¿Qué está pasando aquí?
@@ -65,10 +78,3 @@ INNER JOIN cursos ON alumnos.id_curso = cursos.id_curso;
 - **ON**: Explicas cuál es el conector (donde el ID de uno coincida con el ID del otro).
 
 </br>
-
-## 5. Ejemplo de Resultado
-
-Siguiendo el ejemplo anterior, y como las consultas de SQL siempre devuelven (contestan) una nueva tabla con la información solicitada, el resultado de la consulta sería:
-| nombre | nombre_curso |
-| --- | --- |
-| Marcos | Programación en Java |
