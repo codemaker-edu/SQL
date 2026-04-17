@@ -2,7 +2,7 @@
 
 ¡Bienvenido al módulo de Bases de Datos! Si has llegado hasta aquí, ya sabes programar lógica en Python, Java o C#. Pero ahora vamos a resolver el gran problema de cualquier desarrollador: **¿Qué pasa con los datos cuando cerramos el programa?**.
 
-Hasta ahora, tus programas piden datos a los usuarios por consola, los guardan en variables o estructuras como arrays, y funcionan perfectamente... hasta que cierras el programa y lo vuelves a abrir, y dichos datos han desaparecido, las variables de reinicializan. ¿Cómo guarda entonces una red social mi nombre de usuario, contraseña, lista de amigos, etc., sin que se le borre?
+Hasta ahora, tus programas piden datos a los usuarios por consola, los guardan en variables o estructuras como arrays o listas, y funcionan perfectamente... hasta que cierras el programa y lo vuelves a abrir, y dichos datos han desaparecido, las variables de reinicializan. ¿Cómo guarda entonces una red social mi nombre de usuario, contraseña, lista de amigos, etc., sin que se le borre al cerrar y abrir la app?
 
 Para eso están las bases de datos, una pieza fundamental en el desarrollo de software. Tanto que la gran mayoría de programas del mundo están formados por código de programación + bases de datos.
 
@@ -27,18 +27,20 @@ Para entender por qué necesitamos SQL, debemos diferenciar dónde vive la infor
 ### Memoria Volátil (RAM)
 Cuando creas un `int puntuacion = 10;` en Java o C#, ese dato se guarda en la memoria RAM.
 * **Ventaja:** Es extremadamente rápida.
-* **Problema:** Si el programa se cierra, se produce un error o se apaga el PC, **el dato desaparece para siempre**. Es como escribir en una pizarra: cuando termina la clase, se borra.
+* **Problema:** Si el programa se cierra, se produce un error o se apaga el PC, **el dato desaparece para siempre**.
+
+Es como escribir en una pizarra: cuando termina la clase, se borra.
 
 ### Memoria Persistente (Disco duro)
 Una Base de Datos guarda la información en el almacenamiento secundario (Disco duro/SSD).
 * **Ventaja:** Los datos sobreviven al cierre del programa y a los apagones.
-* **Seguridad:** Podemos relacionar miles de datos sin que el código se vuelva un caos de listas y arrays. Es como escribir en un libro: la información permanece ahí aunque cierres el libro y lo guardes en la estantería.
+* **Problema:** Las acciones de consultar y guardar datos son algo más lentas.
+
+Es como escribir en un libro: la información permanece ahí aunque cierres el libro y lo guardes en la estantería.
 
 | Característica | Variables (Código)                    | Base de Datos (SQL)                   |
 | :---           | :---                                  | :---                                  |
 | **Duración**   | Temporal (mientras corre el programa) | Permanente (hasta que se borre)       |
-| **Capacidad**  | Limitada por la RAM                   | Casi ilimitada (Disco duro)           |
-| **Relaciones** | Complejo de gestionar manualmente     | Diseñado para conectar datos entre sí |
 | **Acceso**     | Solo desde el programa actual         | Accesible por múltiples apps a la vez |
 
 > [!IMPORTANT]
